@@ -1,6 +1,13 @@
 #' A modification of the boxplot with information about the tails
 #'
+#' @section Description:
+#' The qq-boxplot inherits its summary statistics from the boxplot.  See
+#' [geom_boxplot()] for details.  The qq-boxplot differs from the boxplot
+#' by using more informative whiskers than the regular boxplot.
 #'
+#' The vertical position of the whiskers can be interpreted as it is in the
+#' boxplot, and the maximal vertical value is chosen as it is done in the
+#' regula
 
 
 #' @export
