@@ -16,4 +16,6 @@ RoxygenNote: 7.1.1
 Imports: 
     ggplot2,
     grid,
-    MASS
+    MASS,
+    utils,
+    purrr
