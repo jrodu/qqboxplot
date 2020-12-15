@@ -7,9 +7,28 @@
 #'
 #' The vertical position of the whiskers can be interpreted as it is in the
 #' boxplot, and the maximal vertical value is chosen as it is done in the
-#' regula
-
-
+#' regular boxplot.  The horizontal positioning of the whiskers indicates the
+#' deviation of the data set of interest from some reference data set
+#' (specified as either a theoretical distribution or an actual data set).
+#' Taking the central vertical axis of the boxplot as being zero, deviations
+#' to the right indicate that those values are larger than the
+#' corresponding data points in the reference data set, where two data points
+#' correspond if their quantiles match.  Deviations to the left indicate that
+#' the values are smaller than their corresponding data points.  Consider a
+#' situation where your data set has fatter tails than the normal distribution.
+#' When the reference distribution is the normal distribution, then the whiskers
+#' below the box will be left of the central axis (the left tail values are
+#' smaller than they ought to be) and the whiskers above the box will be right
+#' of the central axis (the right tail values are larger than the ought to be).
+#'
+#' In order to compare the data set of interest to the reference data set, they
+#' must be on the same scale.  The qq-boxplot uses Tukey's g-h distribution
+#' to determine the appropriate scaling factor.
+#'
+#' Much of the code here is a modification of the geom_boxplot() code.
+#'
+#' @inheritParams geom_boxplot()
+#'
 #' @export
 geom_qqboxplot <- function(mapping = NULL, data = NULL,
                            stat = "qqboxplot", position = "dodge2",
@@ -30,7 +49,7 @@ geom_qqboxplot <- function(mapping = NULL, data = NULL,
 
   # varwidth = TRUE is not compatible with preserve = "total"
   if (is.character(position)) {
-    if (varwidth == TRUE) position <- position_dodge2(preserve = "single")
+    if (varwidth == TRUE) position <- ggplot2::position_dodge2(preserve = "single")
   } else {
     if (identical(position$preserve, "total") & varwidth == TRUE) {
       warning("Can't preserve total widths when varwidth = TRUE.", call. = FALSE)
@@ -62,9 +81,7 @@ geom_qqboxplot <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @rdname ggplot2-ggproto
-#' @format NULL
-#' @usage NULL
+
 #' @export
 GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
 
@@ -206,7 +223,7 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
                              outliers_grob <- NULL
                            }
 
-                           ggname("geom_qqboxplot", grobTree(
+                           ggplot2::ggname("geom_qqboxplot", grid::grobTree(
                              outliers_grob,
                              GeomPath$draw_panel(whiskers, panel_params, coord),
                              GeomCrossbar$draw_panel(box, fatten = fatten, panel_params, coord),

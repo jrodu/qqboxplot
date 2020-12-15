@@ -1,3 +1,22 @@
+#' @rdname geom_qqboxplot
+#' @inheritParams stat_boxplot()
+#' @param reference_dist Specifies theoretical reference distribution.
+#' @param confidence_level Sets confidence level for deviation whisker
+#' confidence bands
+#' @param compdata specifies a data set to use as the reference distribution.
+#' If compdata is not NULL, the argument reference_dist will be ignored.
+#' @section Computed variables:
+#' `stat_qqboxplot()` provides the following variables, some of which depend on the orientation:
+#' \describe{
+#'   \item{width}{width of boxplot}
+#'   \item{ymin *or* xmin}{lower whisker = smallest observation greater than or equal to lower hinge - 1.5 * IQR}
+#'   \item{lower *or* xlower}{lower hinge, 25% quantile}
+#'   \item{notchlower}{lower edge of notch = median - 1.58 * IQR / sqrt(n)}
+#'   \item{middle *or* xmiddle}{median, 50% quantile}
+#'   \item{notchupper}{upper edge of notch = median + 1.58 * IQR / sqrt(n)}
+#'   \item{upper *or* xupper}{upper hinge, 75% quantile}
+#'   \item{ymax *or* xmax}{upper whisker = largest observation less than or equal to upper hinge + 1.5 * IQR}
+#' }
 #' @export
 stat_qqboxplot <- function(mapping = NULL, data = NULL,
                            geom = "qqboxplot", position = "dodge2",
@@ -27,9 +46,6 @@ stat_qqboxplot <- function(mapping = NULL, data = NULL,
 }
 
 
-#' @rdname ggplot2-ggproto
-#' @format NULL
-#' @usage NULL
 #' @export
 StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                          required_aes = c("y"),
