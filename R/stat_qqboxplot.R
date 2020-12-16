@@ -1,5 +1,5 @@
 #' @rdname geom_qqboxplot
-#' @inheritParams stat_boxplot()
+#' @inheritParams ggplot2::stat_boxplot
 #' @param reference_dist Specifies theoretical reference distribution.
 #' @param confidence_level Sets confidence level for deviation whisker
 #' confidence bands
@@ -31,7 +31,7 @@ stat_qqboxplot <- function(mapping = NULL, data = NULL,
   ggplot2::layer(
     data = data,
     mapping = mapping,
-    stat = StatQqBoxplot,
+    stat = StatQqboxplot,
     geom = geom,
     position = position,
     show.legend = show.legend,
@@ -46,7 +46,6 @@ stat_qqboxplot <- function(mapping = NULL, data = NULL,
 }
 
 
-#' @export
 StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                          required_aes = c("y"),
                          non_missing_aes = "weight",

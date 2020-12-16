@@ -17,5 +17,4 @@ Imports:
     ggplot2,
     grid,
     MASS,
-    utils,
-    purrr
+    utils

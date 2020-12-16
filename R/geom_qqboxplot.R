@@ -27,7 +27,7 @@
 #'
 #' Much of the code here is a modification of the geom_boxplot() code.
 #'
-#' @inheritParams geom_boxplot()
+#' @inheritParams ggplot2::geom_boxplot
 #'
 #' @export
 geom_qqboxplot <- function(mapping = NULL, data = NULL,
@@ -82,7 +82,6 @@ geom_qqboxplot <- function(mapping = NULL, data = NULL,
 }
 
 
-#' @export
 GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
 
                          # need to declare `width`` here in case this geom is used with a stat that
@@ -223,7 +222,7 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
                              outliers_grob <- NULL
                            }
 
-                           ggplot2::ggname("geom_qqboxplot", grid::grobTree(
+                           ggname("geom_qqboxplot", grid::grobTree(
                              outliers_grob,
                              GeomPath$draw_panel(whiskers, panel_params, coord),
                              GeomCrossbar$draw_panel(box, fatten = fatten, panel_params, coord),
