@@ -1,13 +1,17 @@
 Package: qqboxplot
-Title: What the Package Does (One Line, Title Case)
+Title: Implements the Q-q Boxplot
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jordan",
+           family = "Rodu",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "jordan.rodu@virginia.edu")
+Description: This package implements the q-q boxplot.  It is implemented as an
+    extension to ggplot2.  The q-q boxplot is an amalgam of the boxplot and the
+    q-q plot and allows the user to rapidly examine summary statistics and tail
+    behavior for multiple distributions in the same pane.  As an extension of
+    the ggplot2 implementation of the boxplot, possible modifications to the 
+    boxplot extend to the q-q boxplot.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
