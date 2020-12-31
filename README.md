@@ -27,23 +27,7 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(tidyverse)
-#> -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-#> v ggplot2 3.3.2     v purrr   0.3.4
-#> v tibble  3.0.3     v dplyr   1.0.2
-#> v tidyr   1.1.2     v stringr 1.4.0
-#> v readr   1.3.1     v forcats 0.5.0
-#> -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-#> x dplyr::filter() masks stats::filter()
-#> x dplyr::lag()    masks stats::lag()
 library(scales)
-#> 
-#> Attaching package: 'scales'
-#> The following object is masked from 'package:purrr':
-#> 
-#>     discard
-#> The following object is masked from 'package:readr':
-#> 
-#>     col_factor
 library(qqboxplot)
 
 data <- tibble(y=c(rnorm(1000, mean=2), rt(1000, 16), rt(500, 4), rt(1000, 8), rt(1000, 32)), group=c(rep("normal, mean=2", 1000), rep("t distribution, df=16", 1000), rep("t distribution, df=4", 500), rep("t distribution, df=8", 1000), rep("t distribution, df=32", 1000)))
