@@ -4,21 +4,17 @@
 # qqboxplot
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
-The goal of qqboxplot is to …
+The qqboxplot package implements q-q boxplots as an extension to
+ggplot2.
 
 ## Installation
 
-You can install the released version of qqboxplot from
-[CRAN](https://CRAN.R-project.org) with:
+[CRAN](https://CRAN.R-project.org) installation coming soon.
 
-``` r
-install.packages("qqboxplot")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+The most recent version of qqboxplot can be installed from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -27,36 +23,29 @@ devtools::install_github("jrodu/qqboxplot")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example:
 
 ``` r
+library(tidyverse)
+library(scales)
 library(qqboxplot)
+
+data <- tibble(y=c(rnorm(1000, mean=2), rt(1000, 16), rt(500, 4), rt(1000, 8), rt(1000, 32)), group=c(rep("normal, mean=2", 1000), rep("t distribution, df=16", 1000), rep("t distribution, df=4", 500), rep("t distribution, df=8", 1000), rep("t distribution, df=32", 1000)))
+
+data %>%
+ggplot(aes(factor(group, levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16", "t distribution, df=8", "t distribution, df=4")), y=y)) +
+geom_qqboxplot(notch=TRUE, varwidth = TRUE, reference_dist="norm") +
+xlab("reference: normal distribution") +
+ylab(NULL) +
+guides(color=FALSE) +
+theme(axis.text.x = element_text(angle = 23, size = 15), axis.title.y = element_text(size=15),
+axis.title.x = element_text(size=15),
+panel.border = element_blank(), panel.background = element_rect(fill="white"), panel.grid.major = element_line(colour = "grey70"), panel.grid.minor = element_line(colour="grey80"))
+```
+
+<img src="man/figures/README-example-1.png" width="100%" />
+
+``` r
+
 ## basic example code
 ```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
