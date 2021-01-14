@@ -22,3 +22,5 @@ Imports:
     grid,
     MASS,
     utils
+Depends: 
+    R (>= 2.10)
