@@ -26,7 +26,8 @@ This vignette introduces some basic usage of the R package qqboxplot.  The figur
 We first look at visualizations using the q-q boxplot.  We first load the qqboxplot package and the tidyverse.
  
 ```{r setup, message=FALSE}
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 library(qqboxplot)
 ```
 
