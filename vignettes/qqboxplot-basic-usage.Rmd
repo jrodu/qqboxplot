@@ -1,0 +1,157 @@
+---
+title: "Basic usage for the qqboxplot package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic usage for the qqboxplot package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  fig.width = 7, 
+  fig.height = 4.8, 
+  fig.align = "center"
+)
+```
+
+
+
+This vignette introduces some basic usage of the R package qqboxplot.  The figures below are reproductions of the figures found in "The q-q boxplot" (citation coming soon).  We first start by reproducing figures that use the q-q boxplot.  The other figures used for comparison in the paper follow after that.
+
+## qqboxplot
+
+We first look at visualizations using the q-q boxplot.  We first load the qqboxplot package and the tidyverse.
+ 
+```{r setup, message=FALSE}
+library(tidyverse)
+library(qqboxplot)
+```
+
+
+Figure 4 in the paper compares simulated t-distributions (and one simulated normal distribution) against a theoretical normal distribution. simulated_data contains to columns, "y" and "group".  
+"group" specifies the distribution the data ("y") comes from.  Note in this figure that reference_dist = "norm" is chosen to specify that the normal distribution should be the reference distribution.
+
+```{r}
+simulated_data %>%
+         ggplot(aes(factor(group, levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16", "t distribution, df=8", "t distribution, df=4")), y=y)) +
+         geom_qqboxplot(notch=TRUE, varwidth = TRUE, reference_dist="norm") +
+         xlab("reference: normal distribution") +
+         ylab(NULL) +
+         guides(color=FALSE) +
+         theme(axis.text.x = element_text(angle = 23, size = 15), axis.title.y = element_text(size=15),
+               axis.title.x = element_text(size=15),
+               panel.border = element_blank(), panel.background = element_rect(fill="white"),
+               panel.grid = element_line(colour = "grey70"))
+
+```
+
+simulated data was created by running the following code:
+
+```{r, eval=FALSE}
+simulated_data <- tibble(y=c(rnorm(1000, mean=2), rt(1000, 16), rt(500, 4), 
+                   rt(1000, 8), rt(1000, 32)),
+        group=c(rep("normal, mean=2", 1000), 
+                rep("t distribution, df=16", 1000), 
+                rep("t distribution, df=4", 500), 
+                rep("t distribution, df=8", 1000), 
+                rep("t distribution, df=32", 1000)))
+```
+
+Figure 5 shows the same data from Figure 4, but compared against a simulated normal distribution, with mean=5 and variance=1.  Note that the reference dataset `comparison_dataset` is a separate vector and is not contained in the dataset `simulated_data`.
+
+```{r}
+comp_dist <- rnorm(1000, 5)
+
+simulated_data %>%
+  ggplot(aes(factor(group, levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16", "t distribution, df=8", "t distribution, df=4")), y=y)) +
+  geom_qqboxplot(notch=TRUE, varwidth = TRUE, compdata=comparison_dataset) +
+  xlab("reference: simulated normal dataset") +
+  ylab(NULL) +
+  theme(axis.text.x = element_text(angle = 23, size = 15), axis.title.y = element_text(size=15),
+        axis.title.x = element_text(size=15),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"))
+```
+
+The vector `comparison_dataset` was simulated as follows
+
+```{r, eval=FALSE}
+comparison_dataset <- rnorm(1000, 5)
+```
+
+Figure 6 uses dataset "indicators" from this package.  Male, 2008 serves as a base case.  Note that the deviation whiskers for Male 2008 are straight since it is being compared with itself.
+
+```{r, fig.height=2.7}
+comparison_data <- indicators %>% filter(year==2008 & `Series Code`=="SL.TLF.ACTI.1524.MA.NE.ZS")
+
+indicators %>%
+  #change the labels in series name to shorter titles
+  mutate(`Series Name`= ifelse(
+    `Series Name`=="Labor force participation rate for ages 15-24, male (%) (national estimate)", 
+                               "Male ages 15-24", 
+                               "Female ages 15-24")) %>%
+  ggplot(aes(as.factor(year), y=indicator))+
+  geom_qqboxplot(notch=TRUE, varwidth = TRUE, compdata=comparison_data$indicator) +
+  xlab("Year") +
+  ylab("Country level labor force\nparticipation rate (%)") +
+  facet_wrap(~factor(`Series Name`, levels = c("Male ages 15-24", "Female ages 15-24"))) +
+  theme(strip.text = element_text(size=12), axis.text.x = element_text(size = 15), axis.title.x = element_text(size=15),
+        axis.title.y = element_text(size=12),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"))
+```
+
+Figure 8 looks at spike counts from the V1 region of the brain under various grating orientations shown to a anaesthetized macaque.  The question her is if the spike counts can for each orientation can be reasonably modeled by a normal distribution (i.e. is the firing rate high enough to be reasonably approximated by a Gaussian)
+
+```{r}
+spike_data %>% filter(region=="V1") %>%
+  ggplot(aes(factor(orientation), nspikes)) +
+  geom_qqboxplot(notch=TRUE, varwidth = TRUE, reference_dist="norm") +
+  xlab("orientation") +
+  ylab("spike count") +
+  theme(axis.text.x = element_text(size = 15), axis.text.y = element_text(size=14), axis.title.x = element_text(size=15),
+        axis.title.y = element_text(size=15),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"))
+```
+
+Figure 10 is the same setup but is looking at neurons in V2.  Here we see that the firing rate is too low to be reasonably modeled as Gaussian.
+
+```{r}
+spike_data %>% filter(region=="V2") %>%
+  ggplot(aes(factor(orientation), nspikes)) +
+  geom_qqboxplot(notch=TRUE, varwidth = TRUE, reference_dist="norm") +
+  xlab("orientation") +
+  ylab("spike count") +
+  theme(axis.text.x = element_text(size = 15), axis.text.y = element_text(size=14), axis.title.x = element_text(size=15),
+        axis.title.y = element_text(size=15),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"))
+```
+
+Figure 13 look at the firing rate for a population of neurons and asks if the population can be reasonably modeled as lognormal.  It appears that, in general, this is not a reasonable distributional assumption.
+
+```{r}
+population_brain_data %>%
+  ggplot(aes(x=ecephys_structure_acronym, y=log(rate))) +
+  geom_qqboxplot(notch=TRUE, varwidth = TRUE, reference_dist="norm") +
+  xlab("Brain regions") +
+  ylab("Log firing rate") +
+  facet_wrap(~fr_type) +
+  theme(axis.text.x = element_text(size = 15), axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=15)
+        , axis.title.y = element_text(size=15),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid.major = element_line(colour = "grey70"), panel.grid.minor = element_line(colour="grey80"),
+        strip.text.x = element_text(size = 14))
+```
+
+
+
+
+
+
+

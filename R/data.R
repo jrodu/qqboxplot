@@ -14,6 +14,14 @@
 "simulated_data"
 
 
+#' Simulated normal dataset with mean=5 and variance=1
+#'
+#' A dataset that contains simulatd data to reproduce a figure in our manuscript
+#'
+#' @format A vector
+#'
+#' @source simulations
+"comparison_dataset"
 
 #' World Bank indicator data for Labor Force participation rates
 #'
@@ -48,7 +56,7 @@
 #'   ...
 #' }
 #' @source \url{https://CRCNS.org}
-"indicators"
+"spike_data"
 
 
 #' Neuron population firing data
@@ -65,5 +73,5 @@
 #'   ...
 #' }
 #' @source \url{https://allensdk.readthedocs.io/en/latest/visual_coding_neuropixels.html}
-"indicators"
+"population_brain_data"
 
