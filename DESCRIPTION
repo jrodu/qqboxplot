@@ -28,5 +28,6 @@ Depends:
 Suggests: 
     knitr,
     rmarkdown,
-    dplyr
+    dplyr,
+    gridExtra
 VignetteBuilder: knitr

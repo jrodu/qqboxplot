@@ -31,9 +31,54 @@ library(ggplot2)
 library(qqboxplot)
 ```
 
-## Figure 2
+## Figure 1
 
-Figure 2
+Figure 1 is meant to be a quick comparison of boxplots, q-q plots, and q-q boxplots.  It uses a random sample of genes from one autism and one control patient and determines if the log of the gene expression counts can be modeled as lognormal.
+
+```{r, fig.height=2.7}
+
+#set value for text size so consistent across figures
+eltext <- 12
+
+#q-q boxplot
+qqbox <- expression_data %>% 
+  ggplot(aes(specimen, log_count)) + geom_qqboxplot(varwidth = TRUE, notch = TRUE) +
+  ylab('logged normalized expression') + ggtitle("c) q-q boxplot") +
+  theme(plot.title=element_text(size=eltext, face="plain", hjust=0.5), axis.title.x = element_text(size=eltext), axis.title.y = element_text(size=eltext),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid.major = element_line(colour = "grey70"),
+        panel.grid.minor = element_line(colour="grey80"))
+
+# regular boxplot
+box <- expression_data %>%
+  ggplot(aes(specimen, log_count)) + geom_boxplot(varwidth = TRUE, notch = TRUE) +
+  ylab('logged normalized expression') + ggtitle('a) boxplot') +
+  theme(plot.title=element_text(size=eltext, face="plain", hjust=0.5), axis.title.x = element_text(size=eltext), axis.title.y = element_text(size=eltext),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid.major = element_line(colour = "grey70"),
+        panel.grid.minor = element_line(colour="grey80"))
+
+override.shape <- c(16, 17)
+#q-q plot
+qq <- expression_data %>%
+  ggplot(aes(sample=log_count)) + geom_qq(aes(color=specimen, shape=specimen)) +
+  xlab('theoretical normal distribution') +
+  ylab('logged normalized expression') + ggtitle('b) q-q plot') +
+  labs(color="specimen") +
+  guides(color = guide_legend(override.aes = list(shape=override.shape)), shape=FALSE) +
+  theme(plot.title=element_text(size=eltext, face="plain", hjust=0.5), axis.title.x = element_text(size=eltext), axis.title.y = element_text(size=eltext),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid.major = element_line(colour = "grey70"),
+        panel.grid.minor = element_line(colour="grey80"),
+        legend.position = c(0.8, 0.2))
+
+library(gridExtra)
+# combine the plots
+gridExtra::grid.arrange(box, qq, qqbox, ncol=3)
+```
+
+
+## Figure 2
 
 Figure 2 in the paper shows boxplots for simulated t-distributions (and one simulated normal distribution with mean=2). simulated_data contains two columns, "y" and "group".  
 "group" specifies the distribution the data ("y") comes from.
