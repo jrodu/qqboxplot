@@ -52,7 +52,7 @@ simulated_data %>%
 simulated data was created by running the following code:
 
 ```{r, eval=FALSE}
-simulated_data <- tibble(y=c(rnorm(1000, mean=2), rt(1000, 16), rt(500, 4), 
+tibble(y=c(rnorm(1000, mean=2), rt(1000, 16), rt(500, 4), 
                    rt(1000, 8), rt(1000, 32)),
         group=c(rep("normal, mean=2", 1000), 
                 rep("t distribution, df=16", 1000), 
@@ -64,8 +64,6 @@ simulated_data <- tibble(y=c(rnorm(1000, mean=2), rt(1000, 16), rt(500, 4),
 Figure 5 shows the same data from Figure 4, but compared against a simulated normal distribution, with mean=5 and variance=1.  Note that the reference dataset `comparison_dataset` is a separate vector and is not contained in the dataset `simulated_data`.
 
 ```{r}
-comp_dist <- rnorm(1000, 5)
-
 simulated_data %>%
   ggplot(aes(factor(group, levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16", "t distribution, df=8", "t distribution, df=4")), y=y)) +
   geom_qqboxplot(notch=TRUE, varwidth = TRUE, compdata=comparison_dataset) +
@@ -80,7 +78,7 @@ simulated_data %>%
 The vector `comparison_dataset` was simulated as follows
 
 ```{r, eval=FALSE}
-comparison_dataset <- rnorm(1000, 5)
+rnorm(1000, 5)
 ```
 
 Figure 6 uses dataset "indicators" from this package.  Male, 2008 serves as a base case.  Note that the deviation whiskers for Male 2008 are straight since it is being compared with itself.
