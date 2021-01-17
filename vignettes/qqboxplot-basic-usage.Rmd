@@ -144,13 +144,125 @@ population_brain_data %>%
         axis.title.x = element_text(size=15)
         , axis.title.y = element_text(size=15),
         panel.border = element_blank(), panel.background = element_rect(fill="white"),
-        panel.grid.major = element_line(colour = "grey70"), panel.grid.minor = element_line(colour="grey80"),
+        panel.grid = element_line(colour = "grey70"),
         strip.text.x = element_text(size = 14))
 ```
 
 
+## Aditional plots for comparison purposes
+
+Here we provide the other plots referenced in our paper, reproduced here with little commentary.
+
+Figure 2:
+
+```{r}
+simulated_data %>%
+  ggplot(aes(factor(group, levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16", "t distribution, df=8", "t distribution, df=4")), y=y)) +
+  geom_boxplot(notch=TRUE, varwidth = TRUE) +
+  xlab(NULL) +
+  ylab(NULL) +
+  theme(axis.text.x = element_text(angle = 23, size = 15), axis.title.y = element_text(size=15),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"))
+```
+
+Figure 3
+
+```{r}
+override.shape <- c(16, 17, 15, 3, 7)
+
+simulated_data %>% ggplot(aes(sample=y, color=factor(group, levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16", "t distribution, df=8", "t distribution, df=4")),
+                              shape=factor(group, levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16", "t distribution, df=8", "t distribution, df=4")))) +
+  geom_qq() + geom_qq_line() + labs(color="distribution") +
+  xlab("Normal Distribution") +
+  ylab("Simulated Datasets") +
+  guides(color = guide_legend(override.aes = list(shape=override.shape)), shape=FALSE) +
+  theme(axis.title.x = element_text(size=15), axis.title.y = element_text(size=15),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"))
+```
 
 
+Figure 7
+
+```{r, fig.height=2.7}
+indicators %>%
+  #change the labels in series name to shorter titles
+  mutate(`Series Name`= ifelse(
+    `Series Name`=="Labor force participation rate for ages 15-24, male (%) (national estimate)", 
+                               "Male ages 15-24", 
+                               "Female ages 15-24")) %>%
+  ggplot()+
+  geom_violin(aes(x=factor(year),y=indicator),fill='grey',trim=F, draw_quantiles = c(.25, .5, .75))+
+  geom_segment(aes(
+    x=match(factor(year),levels(factor(year)))-0.1,
+    xend=match(factor(year),levels(factor(year)))+0.1,
+    y=indicator,yend=indicator),
+    col='black'
+  ) +
+  xlab("Year") +
+  ylab("Country level labor force\nparticipation rate (%)") +
+  facet_wrap(~factor(`Series Name`, levels = c("Male ages 15-24", "Female ages 15-24"))) +
+  theme(strip.text = element_text(size=12), axis.text.x = element_text(size = 15), axis.title.x = element_text(size=15),
+        axis.title.y = element_text(size=12),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"))
+```
 
 
+Figure 9
 
+```{r}
+spike_data %>% filter(region=="V1") %>%
+  ggplot()+
+  geom_violin(aes(x=factor(orientation),y=nspikes),fill='grey',trim=F, draw_quantiles = c(.25, .5, .75))+
+  geom_segment(aes(
+    x=match(factor(orientation),levels(factor(orientation)))-0.1,
+    xend=match(factor(orientation),levels(factor(orientation)))+0.1,
+    y=nspikes,yend=nspikes),
+    col='black'
+  ) +
+  xlab("orientation") +
+  ylab("spike count") +
+  theme(axis.text.x = element_text(size = 15), axis.text.y = element_text(size=14), axis.title.x = element_text(size=15),
+        axis.title.y = element_text(size=15),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"))
+```
+
+Figure 11
+
+```{r}
+spike_data %>% filter(region=="V2") %>%
+  ggplot()+
+  geom_violin(aes(x=factor(orientation),y=nspikes),fill='grey',trim=F, draw_quantiles = c(.25, .5, .75))+
+  geom_segment(aes(
+    x=match(factor(orientation),levels(factor(orientation)))-0.1,
+    xend=match(factor(orientation),levels(factor(orientation)))+0.1,
+    y=nspikes,yend=nspikes),
+    col='black'
+  ) +
+  xlab("orientation") +
+  ylab("spike count") +
+  theme(axis.text.x = element_text(size = 15), axis.text.y = element_text(size=14), axis.title.x = element_text(size=15),
+        axis.title.y = element_text(size=15),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"))
+```
+
+Figure 12
+
+```{r}
+population_brain_data %>%
+  ggplot(aes(x=ecephys_structure_acronym, y=log(rate))) +
+  geom_violin(fill='grey',trim=F, draw_quantiles = c(.25, .5, .75))+
+  xlab("Brain regions") +
+  ylab("Log firing rate") +
+  facet_wrap(~fr_type) +
+  theme(axis.text.x = element_text(size = 15), axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=15)
+        , axis.title.y = element_text(size=15),
+        panel.border = element_blank(), panel.background = element_rect(fill="white"),
+        panel.grid = element_line(colour = "grey70"),
+        strip.text.x = element_text(size = 14))
+```
