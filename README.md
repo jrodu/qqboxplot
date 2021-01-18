@@ -29,7 +29,7 @@ This is a basic example using simulated data from the qqboxplot package:
 ``` r
 library(dplyr)
 library(ggplot2)
-library(qqboxplot)
+library(qqboxplot) 
 
 simulated_data %>%
          ggplot(aes(factor(group, levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16", "t distribution, df=8", "t distribution, df=4")), y=y)) +
