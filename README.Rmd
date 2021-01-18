@@ -34,7 +34,7 @@ devtools::install_github("jrodu/qqboxplot")
 
 This is a basic example using simulated data from the qqboxplot package:
 
-```{r example, message=FALSE}
+```{r example, message=FALSE, fig.height=4.8, fig.width=7}
 library(dplyr)
 library(ggplot2)
 library(qqboxplot)
@@ -49,7 +49,5 @@ simulated_data %>%
                axis.title.x = element_text(size=15),
                panel.border = element_blank(), panel.background = element_rect(fill="white"),
                panel.grid = element_line(colour = "grey70"))
-
-## basic example code
 ```
 
