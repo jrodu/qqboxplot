@@ -372,7 +372,7 @@ data <- as_tibble(expand.grid(h=h_grid, g=g_grid, z=z_grid)) %>%
   mutate(iqr_ratio = (iqr_mod) / iqr)
 
 data %>%
-  ggplot(aes(g, h)) + geom_raster(aes(fill=iqr_ratio)) + scale_fill_gradient(low="white", high=muted("red")) +
+  ggplot(aes(g, h)) + geom_raster(aes(fill=iqr_ratio)) + scale_fill_gradient2(low=muted("blue"), mid="white", high=muted("red"), midpoint=1) +
   guides(fill=guide_colorbar(title="iqr ratio")) +
   theme(axis.title.x = element_text(size=15), axis.title.y = element_text(size=15),
         panel.border = element_blank(), panel.background = element_rect(fill="white"),
