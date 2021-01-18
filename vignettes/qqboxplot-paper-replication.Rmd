@@ -350,7 +350,7 @@ population_brain_data %>%
 library(scales)
 
 # set grid
-h_grid <- seq(from=0, to=2, length.out = 101)
+h_grid <- seq(from=-2, to=2, length.out = 101)
 g_grid <- seq(from=-2, to=2, length.out = 101)
 z_grid <- c(-.67448, .67448)
 
