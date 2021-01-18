@@ -37,7 +37,7 @@ Figure 1 is meant to be a quick comparison of boxplots, q-q plots, and q-q boxpl
 
 ```{r, fig.height=2.7}
 
-#set value for text size so consistent across figures
+#set value for text size so consistent across figures (only applies to figure 1)
 eltext <- 12
 
 #q-q boxplot
