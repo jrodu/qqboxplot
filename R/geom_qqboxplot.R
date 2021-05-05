@@ -125,17 +125,17 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
                                                outlier.alpha = NULL,
                                                notch = FALSE, notchwidth = 0.5, varwidth = FALSE) {
 
-                           common <- data.frame(
+                           common <- base::data.frame(
                              colour = data$colour,
                              size = data$size,
                              linetype = data$linetype,
-                             fill = alpha(data$fill, data$alpha),
+                             fill = scales::alpha(data$fill, data$alpha),
                              group = data$group,
                              stringsAsFactors = FALSE
                            )
 
 
-                           whiskers <- data.frame(
+                           whiskers <- base::data.frame(
                              x = as.integer(data$x)+c(data$deviatlower[[1]], data$deviatupper[[1]]),
                              y = c(data$lowery[[1]], data$uppery[[1]]),
                              alpha = NA,
@@ -143,7 +143,7 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
                              stringsAsFactors = FALSE
                            )
 
-                           whisker_upper_bound <- data.frame(
+                           whisker_upper_bound <- base::data.frame(
                              x = c(as.integer(data$x)+data$upperlower[[1]], rev(as.integer(data$x)+data$upperupper[[1]])),
                              y = c(data$uppery[[1]], rev(data$uppery[[1]])),
                              alpha = .1,
@@ -153,7 +153,7 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
                              stringsAsFactors = FALSE
                            )
 
-                           whisker_lower_bound <- data.frame(
+                           whisker_lower_bound <- base::data.frame(
                              x = c(as.integer(data$x)+data$lowerlower[[1]], rev(as.integer(data$x)+data$lowerupper[[1]])),
                              y = c(data$lowery[[1]], rev(data$lowery[[1]])),
                              alpha = .1,
@@ -163,7 +163,7 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
                              stringsAsFactors = FALSE
                            )
 
-                           whisker_upper_bound_point <- data.frame(
+                           whisker_upper_bound_point <- base::data.frame(
                              x = c(as.integer(data$x)+data$upperlower[[1]], rev(as.integer(data$x)+data$upperupper[[1]])),
                              y = c(data$uppery[[1]], rev(data$uppery[[1]])),
                              alpha = .15,
@@ -175,7 +175,7 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
                              stringsAsFactors = FALSE
                            )
 
-                           whisker_lower_bound_point <- data.frame(
+                           whisker_lower_bound_point <- base::data.frame(
                              x = c(as.integer(data$x)+data$lowerlower[[1]], rev(as.integer(data$x)+data$lowerupper[[1]])),
                              y = c(data$lowery[[1]], rev(data$lowery[[1]])),
                              alpha = .15,
@@ -190,7 +190,7 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
 
 
 
-                           box <- data.frame(
+                           box <- base::data.frame(
                              xmin = data$xmin,
                              xmax = data$xmax,
                              ymin = data$lower,
@@ -205,7 +205,7 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
                            )
 
                            if (!is.null(data$outliers) && length(data$outliers[[1]] >= 1)) {
-                             outliers <- data.frame(
+                             outliers <- base::data.frame(
                                y = data$outliers[[1]],
                                x = data$x[1],
                                colour = outlier.colour %||% data$colour[1],
@@ -217,19 +217,19 @@ GeomQqboxplot <- ggplot2::ggproto("GeomQqboxplot", ggplot2::Geom,
                                alpha = outlier.alpha %||% data$alpha[1],
                                stringsAsFactors = FALSE
                              )
-                             outliers_grob <- GeomPoint$draw_panel(outliers, panel_params, coord)
+                             outliers_grob <- ggplot2::GeomPoint$draw_panel(outliers, panel_params, coord)
                            } else {
                              outliers_grob <- NULL
                            }
 
                            ggname("geom_qqboxplot", grid::grobTree(
                              outliers_grob,
-                             GeomPath$draw_panel(whiskers, panel_params, coord),
-                             GeomCrossbar$draw_panel(box, fatten = fatten, panel_params, coord),
-                             GeomPolygon$draw_panel(whisker_upper_bound, panel_params, coord),
-                             GeomPolygon$draw_panel(whisker_lower_bound, panel_params, coord),
-                             GeomPoint$draw_panel(whisker_upper_bound_point, panel_params, coord),
-                             GeomPoint$draw_panel(whisker_lower_bound_point, panel_params, coord)
+                             ggplot2::GeomPath$draw_panel(whiskers, panel_params, coord),
+                             ggplot2::GeomCrossbar$draw_panel(box, fatten = fatten, panel_params, coord),
+                             ggplot2::GeomPolygon$draw_panel(whisker_upper_bound, panel_params, coord),
+                             ggplot2::GeomPolygon$draw_panel(whisker_lower_bound, panel_params, coord),
+                             ggplot2::GeomPoint$draw_panel(whisker_upper_bound_point, panel_params, coord),
+                             ggplot2::GeomPoint$draw_panel(whisker_lower_bound_point, panel_params, coord)
                            ))
                          },
 

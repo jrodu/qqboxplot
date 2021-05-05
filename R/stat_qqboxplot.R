@@ -3,6 +3,8 @@
 #' @param reference_dist Specifies theoretical reference distribution.
 #' @param confidence_level Sets confidence level for deviation whisker
 #' confidence bands
+#' @param numboots specifies the number of bootstrap draws for bootstrapped CIs
+#' needed only if compdata is not NULL
 #' @param compdata specifies a data set to use as the reference distribution.
 #' If compdata is not NULL, the argument reference_dist will be ignored.
 #' @section Computed variables:
@@ -27,6 +29,7 @@ stat_qqboxplot <- function(mapping = NULL, data = NULL,
                            inherit.aes = TRUE,
                            reference_dist = "norm",
                            confidence_level = .95,
+                           numboots = 500,
                            compdata = NULL) {
   ggplot2::layer(
     data = data,
@@ -40,6 +43,7 @@ stat_qqboxplot <- function(mapping = NULL, data = NULL,
       na.rm = na.rm,
       coef = coef,
       reference_dist = reference_dist,
+      numboots = numboots,
       ...
     )
   )
@@ -51,7 +55,7 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                          non_missing_aes = "weight",
                          setup_data = function(data, params) {
                            data$x <- data$x %||% 0
-                           data <- remove_missing(
+                           data <- ggplot2::remove_missing(
                              data,
                              na.rm = FALSE,
                              vars = "x",
@@ -61,7 +65,7 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                          },
 
                          setup_params = function(data, params) {
-                           params$width <- params$width %||% (resolution(data$x %||% 0) * 0.75)
+                           params$width <- params$width %||% (ggplot2::resolution(data$x %||% 0) * 0.75)
 
                            if (is.double(data$x) && !has_groups(data) && any(data$x != data$x[1L])) {
                              warning(
@@ -73,7 +77,7 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                          },
 
                          compute_group = function(data, scales, width = NULL, na.rm = FALSE, coef = 1.5, reference_dist='norm',
-                                                  compdata=NULL, confidence_level=.95) {
+                                                  compdata=NULL, confidence_level=.95, numboots = 500) {
                            qs <- c(0, 0.25, 0.5, 0.75, 1)
 
                            conf <- .95
@@ -193,7 +197,7 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
 
 
 
-                             confs <- getbootconf(data.y.stdze, compdata.stdze, 500, conf) #set as parameter
+                             confs <- getbootconf(data.y.stdze, compdata.stdze, numboots, conf) #set as parameter
 
                              upper <- confs[,2]
 

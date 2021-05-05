@@ -38,6 +38,7 @@ stat_qqboxplot(
   inherit.aes = TRUE,
   reference_dist = "norm",
   confidence_level = 0.95,
+  numboots = 500,
   compdata = NULL
 )
 }
@@ -193,6 +194,9 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{confidence_level}{Sets confidence level for deviation whisker
 confidence bands}
+
+\item{numboots}{specifies the number of bootstrap draws for bootstrapped CIs
+needed only if compdata is not NULL}
 
 \item{compdata}{specifies a data set to use as the reference distribution.
 If compdata is not NULL, the argument reference_dist will be ignored.}
