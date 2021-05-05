@@ -1,11 +1,11 @@
 Package: qqboxplot
-Title: Implements the Q-q Boxplot
-Version: 0.0.0.9000
+Title: Implementation of the Q-q Boxplot
+Version: 0.1.0
 Authors@R: 
     person(given = "Jordan",
            family = "Rodu",
            role = c("aut", "cre"),
-           email = "jordan.rodu@virginia.edu")
+           email = "jordan.rodu@gmail.com")
 Description: This package implements the q-q boxplot.  It is implemented as an
     extension to ggplot2.  The q-q boxplot is an amalgam of the boxplot and the
     q-q plot and allows the user to rapidly examine summary statistics and tail

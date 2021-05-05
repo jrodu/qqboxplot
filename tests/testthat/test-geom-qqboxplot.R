@@ -1,5 +1,5 @@
 testthat::test_that("geom_qqboxplot draws correctly", {
-
+  testthat::skip("requires manual verification")
   sim_against_theoretical <- simulated_data %>%
     ggplot2::ggplot(ggplot2::aes(factor(group, levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16", "t distribution, df=8", "t distribution, df=4")), y=y)) +
     qqboxplot::geom_qqboxplot(notch=TRUE, varwidth = TRUE, reference_dist="norm") +

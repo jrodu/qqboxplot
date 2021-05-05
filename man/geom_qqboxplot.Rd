@@ -248,3 +248,17 @@ Much of the code here is a modification of the geom_boxplot() code.
 }
 }
 
+\examples{
+p <- ggplot2::ggplot(simulated_data, ggplot2::aes(factor(group,
+levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16",
+"t distribution, df=8", "t distribution, df=4")), y=y))
+p + geom_qqboxplot()
+p + geom_qqboxplot(reference_dist = "norm")
+p + geom_qqboxplot(compdata = comparison_dataset)
+
+# geom_qqboxplot inherits all arguments from geom_boxplot, e.g.:
+p + geom_qqboxplot(notch = TRUE)
+p + geom_qqboxplot(varwidth=TRUE)
+p + geom_qqboxplot(ggplot2::aes(color = group)) + ggplot2::guides(color=FALSE)
+
+}
