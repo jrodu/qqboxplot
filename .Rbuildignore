@@ -2,5 +2,9 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
+^cran-comments\.Rmd$
+^cran-comments\.md$
+^NEWS\.Rmd$
+^NEWS\.md$
 ^doc$
 ^Meta$
