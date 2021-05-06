@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 This vignette replicates the figures found in "The q-q boxplot" (citation coming soon).  
 
 
-First load the qqboxplot package and the relevant packages from the tidyverse.
+First load the 'qqboxplot' package and the relevant packages from the 'tidyverse'.
  
 ```{r setup, message=FALSE}
 library(dplyr)
@@ -222,7 +222,7 @@ indicators %>%
 
 ## Figure 8
 
-Figure 8 looks at spike counts from the V1 region of the brain under various grating orientations shown to a anaesthetized macaque.  The question her is if the spike counts can for each orientation can be reasonably modeled by a normal distribution (i.e. is the firing rate high enough to be reasonably approximated by a Gaussian)
+Figure 8 looks at spike counts from the V1 region of the brain under various grating orientations shown to a anesthetized macaque.  The question her is if the spike counts can for each orientation can be reasonably modeled by a normal distribution (i.e. is the firing rate high enough to be reasonably approximated by a Gaussian)
 
 ```{r}
 spike_data %>% filter(region=="V1") %>%

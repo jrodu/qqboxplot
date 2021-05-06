@@ -23,7 +23,7 @@ This vignette introduces some basic usage of the R package qqboxplot.  The figur
 
 ## qqboxplot
 
-First load the qqboxplot package and the tidyverse.
+First load the 'qqboxplot' package and packages from the 'tidyverse'.
  
 ```{r setup, message=FALSE}
 library(dplyr)

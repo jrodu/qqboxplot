@@ -16,7 +16,7 @@
 
 #' Simulated normal dataset with mean=5 and variance=1
 #'
-#' A dataset that contains simulatd data to reproduce a figure in our manuscript
+#' A dataset that contains simulated data to reproduce a figure in our manuscript
 #'
 #' @format A vector
 #'

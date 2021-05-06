@@ -14,6 +14,6 @@ simulations
 comparison_dataset
 }
 \description{
-A dataset that contains simulatd data to reproduce a figure in our manuscript
+A dataset that contains simulated data to reproduce a figure in our manuscript
 }
 \keyword{datasets}
