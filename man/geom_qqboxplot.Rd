@@ -254,7 +254,10 @@ levels=c("normal, mean=2", "t distribution, df=32", "t distribution, df=16",
 "t distribution, df=8", "t distribution, df=4")), y=y))
 p + geom_qqboxplot()
 p + geom_qqboxplot(reference_dist = "norm")
+
+\donttest{
 p + geom_qqboxplot(compdata = comparison_dataset)
+}
 
 # geom_qqboxplot inherits all arguments from geom_boxplot, e.g.:
 p + geom_qqboxplot(notch = TRUE)

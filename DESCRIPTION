@@ -6,11 +6,11 @@ Authors@R:
            family = "Rodu",
            role = c("aut", "cre"),
            email = "jordan.rodu@gmail.com")
-Description: This package implements the q-q boxplot.  It is implemented as an
-    extension to ggplot2.  The q-q boxplot is an amalgam of the boxplot and the
+Description: A system to implement the q-q boxplot.  It is implemented as an
+    extension to 'ggplot2'.  The q-q boxplot is an amalgam of the boxplot and the
     q-q plot and allows the user to rapidly examine summary statistics and tail
     behavior for multiple distributions in the same pane.  As an extension of
-    the ggplot2 implementation of the boxplot, possible modifications to the 
+    the 'ggplot2' implementation of the boxplot, possible modifications to the 
     boxplot extend to the q-q boxplot.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -19,18 +19,16 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     ggplot2,
-    grid,
-    MASS,
-    utils,
-    scales
+    grid
 Depends: 
-    R (>= 2.10)
+    R (>= 3.3)
 Suggests: 
     knitr,
     rmarkdown,
     dplyr,
     gridExtra,
     testthat (>= 3.0.0),
-    vdiffr (>= 0.3.3)
+    vdiffr (>= 0.3.3),
+    scales
 VignetteBuilder: knitr
 Config/testthat/edition: 3
