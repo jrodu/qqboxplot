@@ -1,4 +1,5 @@
-#' @rdname geom_qqboxplot
+#' Compute values for the Q-Q Boxplot
+#'
 #' @inheritParams ggplot2::stat_boxplot
 #' @param reference_dist Specifies theoretical reference distribution.
 #' @param confidence_level Sets confidence level for deviation whisker
@@ -19,6 +20,8 @@
 #'   \item{upper *or* xupper}{upper hinge, 75% quantile}
 #'   \item{ymax *or* xmax}{upper whisker = largest observation less than or equal to upper hinge + 1.5 * IQR}
 #' }
+#' @return Returns an object of class `StatQqboxplot`, (inherits from `Geom`, `ggproto`),
+#'  that helps to render the data for `geom_qqboxplot()`.
 #' @export
 stat_qqboxplot <- function(mapping = NULL, data = NULL,
                            geom = "qqboxplot", position = "dodge2",

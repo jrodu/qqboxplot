@@ -1,6 +1,14 @@
 cran-comments
 ================
 
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+  - added ‘\\value’ to .Rd files regarding exported methods
+  - changed the capitalization of Q-Q in description text and title of
+    DESCRIPTION
+
 ## Test environments
 
   - local Ubuntu 20.04 install, R 4.05

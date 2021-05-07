@@ -1,8 +1,8 @@
 #' A modification of the boxplot with information about the tails
 #'
 #' @section Description:
-#' The qq-boxplot inherits its summary statistics from the boxplot.  See
-#' [geom_boxplot()] for details.  The qq-boxplot differs from the boxplot
+#' The Q-Q boxplot inherits its summary statistics from the boxplot.  See
+#' [geom_boxplot()] for details.  The Q-Q boxplot differs from the boxplot
 #' by using more informative whiskers than the regular boxplot.
 #'
 #' The vertical position of the whiskers can be interpreted as it is in the
@@ -22,12 +22,15 @@
 #' of the central axis (the right tail values are larger than the ought to be).
 #'
 #' In order to compare the data set of interest to the reference data set, they
-#' must be on the same scale.  The qq-boxplot uses Tukey's g-h distribution
+#' must be on the same scale.  The Q-Q boxplot uses Tukey's g-h distribution
 #' to determine the appropriate scaling factor.
 #'
 #' Much of the code here is a modification of the geom_boxplot() code.
 #'
 #' @inheritParams ggplot2::geom_boxplot
+#'
+#' @return Returns an object of class `GeomQqboxplot`, (inherits from `Geom`, `ggproto`),
+#'  that renders the data for the Q-Q boxplot.
 #'
 #' @export
 #' @examples
