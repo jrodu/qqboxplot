@@ -12,7 +12,11 @@ ggplot2.
 
 ## Installation
 
-[CRAN](https://CRAN.R-project.org) installation coming soon.
+Install through [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("qqboxplot")
+```
 
 The most recent version of qqboxplot can be installed from
 [GitHub](https://github.com/) with:
