@@ -17,6 +17,7 @@ stat_qqboxplot(
   reference_dist = "norm",
   confidence_level = 0.95,
   numboots = 500,
+  qtype = 7,
   compdata = NULL
 )
 }
@@ -42,7 +43,7 @@ will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
 \item{geom}{Use to override the default connection between
-\code{geom_boxplot} and \code{stat_boxplot}.}
+\code{geom_boxplot()} and \code{stat_boxplot()}.}
 
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
@@ -75,6 +76,8 @@ confidence bands}
 
 \item{numboots}{specifies the number of bootstrap draws for bootstrapped CIs
 needed only if compdata is not NULL}
+
+\item{qtype}{an integer between 1 and 9 indicating which one of the quantile algorithms to use.}
 
 \item{compdata}{specifies a data set to use as the reference distribution.
 If compdata is not NULL, the argument reference_dist will be ignored.}

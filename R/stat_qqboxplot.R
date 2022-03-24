@@ -8,6 +8,7 @@
 #' needed only if compdata is not NULL
 #' @param compdata specifies a data set to use as the reference distribution.
 #' If compdata is not NULL, the argument reference_dist will be ignored.
+#' @param qtype an integer between 1 and 9 indicating which one of the quantile algorithms to use.
 #' @section Computed variables:
 #' `stat_qqboxplot()` provides the following variables, some of which depend on the orientation:
 #' \describe{
@@ -33,6 +34,7 @@ stat_qqboxplot <- function(mapping = NULL, data = NULL,
                            reference_dist = "norm",
                            confidence_level = .95,
                            numboots = 500,
+                           qtype=7,
                            compdata = NULL) {
   ggplot2::layer(
     data = data,
@@ -47,6 +49,7 @@ stat_qqboxplot <- function(mapping = NULL, data = NULL,
       coef = coef,
       reference_dist = reference_dist,
       numboots = numboots,
+      qtype=qtype,
       ...
     )
   )
@@ -80,17 +83,17 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                          },
 
                          compute_group = function(data, scales, width = NULL, na.rm = FALSE, coef = 1.5, reference_dist='norm',
-                                                  compdata=NULL, confidence_level=.95, numboots = 500) {
+                                                  compdata=NULL, confidence_level=.95, numboots = 500, qtype = 7) {
                            qs <- c(0, 0.25, 0.5, 0.75, 1)
 
                            conf <- .95
 
-                           estimate_B <- function(data)
+                           estimate_B <- function(data, qtype=qtype)
                            {
                              quants <- c(.005, .01, .025, .05, .1, .25)
 
-                             vals_p <- quantile(data, quants)
-                             vals_neg_p <- quantile(data, 1-quants)
+                             vals_p <- quantile(data, quants, type=qtype)
+                             vals_neg_p <- quantile(data, 1-quants, type=qtype)
 
                              med_p <- median(data)
 
@@ -114,7 +117,7 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                              mod <- quantreg::rq(y ~ 1, weights = weight, data = data, tau = qs)
                              stats <- as.numeric(stats::coef(mod))
                            } else {
-                             stats <- as.numeric(stats::quantile(data$y, qs))
+                             stats <- as.numeric(stats::quantile(data$y, qs, type=qtype))
                            }
                            names(stats) <- c("ymin", "lower", "middle", "upper", "ymax")
                            iqr <- diff(stats[c(2, 4)])
@@ -150,13 +153,13 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                            ######## add here ################
                            ##################################
 
-                           calculate_quantile_distance <- function(samp, comparison_samp, isboot=FALSE){
+                           calculate_quantile_distance <- function(samp, comparison_samp, isboot=FALSE, qtype=qtype){
                              len_sample <- length(samp)
                              len_compsample <- length(comparison_samp)
                              quants <- seq(from=0, to=1, length.out=len_sample)
                              if(isboot){
                                samp <- sample(comparison_samp, len_compsample, replace=TRUE)
-                               samp <- quantile(samp, probs=quants)
+                               samp <- quantile(samp, probs=quants, type=qtype)
 
                              }
                              samplesort <- sort(samp)
@@ -166,13 +169,13 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                              if(FALSE){
                                print('here')
                              }
-                             compsample <- sort(quantile(comparison_samp, probs=quants))
+                             compsample <- sort(quantile(comparison_samp, probs=quants, type=qtype))
 
 
                              line.p = c(.25, .75)
 
-                             quant_diff_sample <- diff(quantile(samplesort, line.p))
-                             quant_diff_compsample <- diff(quantile(compsample, line.p))
+                             quant_diff_sample <- diff(quantile(samplesort, line.p, type=qtype))
+                             quant_diff_compsample <- diff(quantile(compsample, line.p, type=qtype))
 
                              tmp=(samplesort - median(samplesort))/quant_diff_sample - (compsample - median(compsample))/quant_diff_compsample
 
@@ -181,20 +184,20 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
                            }
 
                            getbootconf <- function(samp, comparison_samp, numboot, conf){
-                             bootsamp <- replicate(numboot, calculate_quantile_distance(samp, comparison_samp, isboot = TRUE)$dev)
+                             bootsamp <- replicate(numboot, calculate_quantile_distance(samp, comparison_samp, isboot = TRUE, qtype=qtype)$dev)
                              alphdivtwo <- (1-conf)/2
-                             t(apply(bootsamp, 1, quantile, c(alphdivtwo, conf +alphdivtwo)))
+                             t(apply(bootsamp, 1, quantile, c(alphdivtwo, conf +alphdivtwo), type=qtype))
                            }
 
                            if(!is.null(compdata)){
 
 
-                             data.y.stdze <- (data$y-median(data$y))/estimate_B(data$y)
+                             data.y.stdze <- (data$y-median(data$y))/estimate_B(data$y, qtype=qtype)
 
-                             compdata.stdze <- (compdata-median(compdata))/estimate_B(compdata)
+                             compdata.stdze <- (compdata-median(compdata))/estimate_B(compdata, qtype=qtype)
 
 
-                             devlist <- calculate_quantile_distance(data.y.stdze, compdata.stdze)
+                             devlist <- calculate_quantile_distance(data.y.stdze, compdata.stdze, qtype=qtype)
 
                              deviat <- devlist$dev
 
@@ -288,7 +291,7 @@ StatQqboxplot <- ggplot2::ggproto("StatQqboxplot", ggplot2::Stat,
 
 
 
-                             sample.stdz <- (sample-median(sample))/estimate_B(sample)
+                             sample.stdz <- (sample-median(sample))/estimate_B(sample, qtype=qtype)
 
                              quantiles <- ppoints(n)
 
