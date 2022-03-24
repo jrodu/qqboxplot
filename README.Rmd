@@ -53,4 +53,3 @@ simulated_data %>%
                panel.border = element_blank(), panel.background = element_rect(fill="white"),
                panel.grid = element_line(colour = "grey70"))
 ```
-
