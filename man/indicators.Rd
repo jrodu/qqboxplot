@@ -18,7 +18,7 @@ A data frame with 612 rows and 7 variables:
 }
 }
 \source{
-\url{https://datacatalog.worldbank.org/dataset/world-development-indicators}
+\url{https://www.worldbank.org/en/home}
 }
 \usage{
 indicators

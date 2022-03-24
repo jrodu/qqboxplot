@@ -39,7 +39,7 @@
 #'   \item{log_indicator}{the log of the participation rate}
 #'   ...
 #' }
-#' @source \url{https://datacatalog.worldbank.org/dataset/world-development-indicators}
+#' @source \url{https://www.worldbank.org/en/home}
 "indicators"
 
 

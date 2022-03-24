@@ -1,24 +1,14 @@
 cran-comments
 ================
 
-## Resubmission
+## R CMD check results
 
-This is a resubmission. In this version I have:
-
-  - added ‘\\value’ to .Rd files regarding exported methods
-  - changed the capitalization of Q-Q in description text and title of
-    DESCRIPTION
+There were no ERRORs, WARNINGs, or NOTEs.
 
 ## Test environments
 
-  - local Ubuntu 20.04 install, R 4.05
-  - win-builder (devel and release)
-
-## R CMD check results
-
-There were no ERRORs or WARNINGs.
-
-1 NOTE: This is the first submission of this package.
+-   local Ubuntu Linux 20.04.1 LTS install, R-devel
+-   win-builder (devel and release)
 
 ## Downstream dependencies
 
