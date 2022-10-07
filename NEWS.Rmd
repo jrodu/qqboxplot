@@ -3,6 +3,12 @@ title: "NEWS"
 output: github_document
 ---
 
+# qqboxplot 0.2.1
+
+## Minor changes
+
+* remove dependency to ggplot2 has_groups
+
 # qqboxplot 0.2.0
 
 ## Minor changes
