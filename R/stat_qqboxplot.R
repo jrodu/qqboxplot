@@ -4,6 +4,7 @@
 #' @param reference_dist Specifies theoretical reference distribution.
 #' @param confidence_level Sets confidence level for deviation whisker
 #' confidence bands
+#' @param geom specifies the geom function to use
 #' @param numboots specifies the number of bootstrap draws for bootstrapped CIs
 #' needed only if compdata is not NULL
 #' @param compdata specifies a data set to use as the reference distribution.
