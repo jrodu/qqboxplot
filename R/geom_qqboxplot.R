@@ -28,6 +28,7 @@
 #' Much of the code here is a modification of the geom_boxplot() code.
 #'
 #' @inheritParams ggplot2::geom_boxplot
+#' @param stat specifies the stat function to use
 #'
 #' @return Returns an object of class `GeomQqboxplot`, (inherits from `Geom`, `ggproto`),
 #'  that renders the data for the Q-Q boxplot.

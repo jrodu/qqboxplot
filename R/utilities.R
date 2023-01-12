@@ -8,6 +8,5 @@ ggname <- function(prefix, grob) {
 }
 
 has_groups <- function(data) {
-  # Check if groups exist
   data$group[1L] != -1L
 }
